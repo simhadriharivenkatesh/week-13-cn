@@ -1,0 +1,22 @@
+
+# 1. Capture packets from a network interface
+sudo tshark -i eth0 -c 10 -w capture.pcapng
+
+# 2. Read the captured packets
+tshark -r capture.pcapng
+
+# 3. Display only HTTP packets
+tshark -r capture.pcapng -Y "http"
+
+# 4. Filter packets by source IP address
+tshark -r capture.pcapng -Y "ip.src == 192.168.1.10"
+
+# 5. Capture TCP traffic on port 80
+sudo tshark -i eth0 -f "tcp port 80" -c 10 -w http_traffic.pcapng
+
+# 6. Display source and destination IP addresses
+tshark -r capture.pcapng -T fields \
+-e ip.src -e ip.dst -e frame.protocols
+
+# 7. Display protocol statistics
+tshark -r capture.pcapng -q -z io,phs
